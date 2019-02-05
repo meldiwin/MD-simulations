@@ -1,0 +1,79 @@
+LAMMPS (1 Feb 2019)
+# REAX potential for ionicEAP system
+# .....
+
+units		real
+
+atom_style	charge
+read_data	data.ionicEAP
+  orthogonal box = (0 0 0) to (25 25 25)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  42 atoms
+
+pair_style	reax/c lmp_control
+pair_coeff	* * CHON2017_weak.ff H C O
+
+neighbor	2 bin
+neigh_modify	every 10 delay 0 check no
+
+fix		1 all nve
+fix             2 all qeq/reax 1 0.0 10.0 1e-6 param.qeq
+fix             3 all temp/berendsen 500.0 500.0 100.0
+
+timestep	0.25
+
+#dump		1 all atom 30 dump.reax.cho
+
+run		3000
+Neighbor list info ...
+  update every 10 steps, delay 0 steps, check no
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 5 5 5
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reax/c, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: half/ghost/bin/3d/newtoff
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off, ghost
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 11.16 | 11.16 | 11.16 Mbytes
+Step Temp E_pair E_mol TotEng Press 
+       0            0   -1646.6697            0   -1646.6697    1030.3558 
+    3000    506.82602   -2787.4333            0   -2725.4925   -380.24294 
+Loop time of 3.38282 on 1 procs for 3000 steps with 42 atoms
+
+Performance: 19.156 ns/day, 1.253 hours/ns, 886.834 timesteps/s
+98.4% CPU use with 1 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 2.7992     | 2.7992     | 2.7992     |   0.0 | 82.75
+Neigh   | 0.12027    | 0.12027    | 0.12027    |   0.0 |  3.56
+Comm    | 0.012052   | 0.012052   | 0.012052   |   0.0 |  0.36
+Output  | 2.0981e-05 | 2.0981e-05 | 2.0981e-05 |   0.0 |  0.00
+Modify  | 0.44815    | 0.44815    | 0.44815    |   0.0 | 13.25
+Other   |            | 0.003122   |            |       |  0.09
+
+Nlocal:    42 ave 42 max 42 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    286 ave 286 max 286 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    907 ave 907 max 907 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 907
+Ave neighs/atom = 21.5952
+Neighbor list builds = 300
+Dangerous builds not checked
+
+Please see the log.cite file for references relevant to this simulation
+
+Total wall time: 0:00:03
