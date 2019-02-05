@@ -1,1 +1,1 @@
-# MD-simulations reaxc of ionicEAP 
+reaxc-ionicEAP 
