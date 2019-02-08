@@ -8,3 +8,8 @@ param.qeq
 lmp_control   
 log.lammps, the output of the file
 
+
+Longer chain using Avogadro software 
+Minimization using Lammps
+using reaxff
+asking for some experimental work
